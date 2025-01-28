@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  traefik:
+    image: traefik:v3.3 # The official v3 Traefik docker image
+    networks:
+      - witco
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./certs:/certs:ro
+      - ./traefik.yml:/etc/traefik/traefik.yml
+  whoami:
+    image: "traefik/whoami"
+    container_name: "simple-service"
+    networks:
+      - witco
+    # labels:
+    #   - traefik.http.middlewares.myservice-strip.stripprefix.prefixes=/whoami-traefik/
+    #   - "traefik.http.middlewares.myservice-strip.stripprefix.forceslash=false"
+    #   - "traefik.http.routers.whoami.middlewares=myservice-strip"
+networks:
+  witco:

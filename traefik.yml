@@ -1,0 +1,31 @@
+api:
+  insecure: true
+log:
+  level: "DEBUG"
+tls:
+  certificates:
+    - certFile: /certs/server_crt.pem
+      keyFile: /certs/server_key.pem
+  stores:
+    default:
+      defaultCertificate:
+        certFile: /certs/server_crt.pem
+        keyFile: /certs/server_key.pem
+entryPoints:
+  web:
+    address: ":80"
+  web-secured: 
+    address: ":443"
+    http:
+      tls: {}
+providers:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+    exposedByDefault: true
+    watch: true
+    defaultRule: "Host(`client1.local.test`) && PathPrefix(`/{{ .Name }}`)"
+    network: witco
+    # tls:
+    #   insecureSkipVerify: true
+    #   cert: /certs/server_crt.pem
+    #   key: /certs/server_key.pem
