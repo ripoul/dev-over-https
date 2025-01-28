@@ -2,15 +2,6 @@ api:
   insecure: true
 log:
   level: "DEBUG"
-tls:
-  certificates:
-    - certFile: /certs/server_crt.pem
-      keyFile: /certs/server_key.pem
-  stores:
-    default:
-      defaultCertificate:
-        certFile: /certs/server_crt.pem
-        keyFile: /certs/server_key.pem
 entryPoints:
   web:
     address: ":80"
@@ -19,6 +10,8 @@ entryPoints:
     http:
       tls: {}
 providers:
+  file:
+    directory: "/etc/traefik/dynamic"
   docker:
     endpoint: "unix:///var/run/docker.sock"
     exposedByDefault: true
