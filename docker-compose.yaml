@@ -19,9 +19,6 @@ services:
     container_name: "simple-service"
     networks:
       - witco
-    # labels:
-    #   - traefik.http.middlewares.myservice-strip.stripprefix.prefixes=/whoami-traefik/
-    #   - "traefik.http.middlewares.myservice-strip.stripprefix.forceslash=false"
-    #   - "traefik.http.routers.whoami.middlewares=myservice-strip"
 networks:
   witco:
+    external: true
